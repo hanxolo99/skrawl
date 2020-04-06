@@ -1,0 +1,76 @@
+<%- include('partials/header') %>
+<section class="limited-home">
+    <div class="main-content">
+        <h1>Featured </br>Experiences</h1>
+        <h2 class="humongous">Featured</h2>
+        <div class="content-stream">
+            <% for(let i = 0; i < 6 ; i++){ %>
+                <div class="featured-card">
+                    <div class="featured-image-holder">
+                        <img src="../../images/post-avatar.jpeg">
+                    </div>
+                    
+                    <div class="post-text-holder">
+                
+                        <h3>Panic at the disco</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                        <div class="meta-content">
+                            <p><em>Denny Kirk</em></p>
+                        </div>
+                    </div>
+        
+                </div>   
+           <% }%>
+           
+            
+
+        </div>
+    </div>
+    <div class="signup-signin relative" >
+        <%- include('partials/forgot-password') %>
+        <%- include('partials/log-in') %>
+        <%- include('partials/sign-up') %>
+    </div>
+    
+  
+
+ <script>
+     let one = document.getElementById('in');
+     let two = document.getElementById('up');
+     let three = document.getElementById('forg');
+     function changeView(){
+        
+        let button = document.getElementById('changer');
+     if(button.innerHTML === "Sign In"){
+         button.innerHTML = "Sign Up";
+         one.classList.remove("slide-out-top");
+         one.classList.remove("none");
+         one.classList.add("slide-in-bottom");
+         two.classList.remove("slide-in-bottom");
+         two.classList.add("slide-out-top");
+         one.classList.remove("magic");
+         three.classList.add("forgot");
+         
+     }else{
+         button.innerHTML ="Sign In";
+         two.classList.remove("slide-out-top");
+         two.classList.remove("none");
+         two.classList.add("slide-in-bottom");
+         one.classList.remove("slide-in-bottom");
+         one.classList.add("slide-out-top");
+         one.classList.add("none");
+         three.classList.add("forgot");
+     }
+     }
+     function forgt(){
+         let button = document.getElementById('forg-rec');
+        
+         three.classList.remove('forgot');
+         three.classList.add("slide-in-bottom");
+         one.classList.add("slide-out-top");
+         one.classList.remove("slide-in-bottom");
+        //  two.classList.add("slide-out-top");
+     }
+ </script>
+</section>
+
