@@ -1,0 +1,88 @@
+<%- include('partials/complete-header') %>
+<section class="limited-home">
+    <div class="main-content">
+        <h1>New </br>Skrawl</h1>
+        <h2 class="humongous">Compose</h2>
+        <div class="">
+           
+            <form id="post-from" class="compose" method="POST" action="/new-skrawl" enctype="multipart/form-data">
+                <input type="text" placeholder="Enter Title" name="title" class="compose-title">
+                <!-- <input type="text" placeholder="enter category" name="category"> -->
+                <textarea id="mytextarea" rows="35" name="skrawl" ></textarea>
+                <!-- <input type="file" name="featured">
+                <button type="submit">Post Skrawl</button> -->
+            </form>
+        </div>
+    </div>
+    <div class="notifications relative justify" >
+        <div class="notifications-container" >
+            <div class="sub-note no-shadow">
+                <p> <img src="../../images/japan.svg"><span>Unpublished</span></p>
+           </div>
+       </div>
+       <div class="image-upload sidebar-card">
+       
+        <input type='file' onchange="readURL(this);" name="featured" form="post-from"/ required>
+        <div id="blah" class="subtle"> 
+            <p id="setimage">Set featured image</p>
+        </div>     
+       </div>
+       <div class="categories-select sidebar-card">
+           <div class="card-title">
+               <h5>Add Post Categories</h5>
+           </div>
+
+           <div class="category-form">
+            <input type="radio" id="art" name="category" value="Arts & Entertainment" form="post-from">
+            <label for="male">Arts & Entertainment</label><br>
+            <input type="radio" id="science" name="category" value="Science" form="post-from">
+            <label for="female">Science</label><br>
+            <input type="radio" id="lifestyle" name="category" value="Lifestyle" form="post-from">
+            <label for="other">Lifestyle</label><br>
+            <input type="radio" id="industry" name="category" value="Industry" form="post-from">
+            <label for="other">Industry</label><br>
+            <input type="radio" id="society" name="category" value="Society" form="post-from">
+            <label for="other">Society</label><br>
+            <input type="radio" id="ict" name="category" value="Tech & Innovations" form="post-from">
+            <label for="other">Tech & Innovations</label><br>
+            <input type="radio" id="politics" name="category" value="Politics" form="post-from">
+            <label for="other">Politics</label>
+           </div>
+           
+
+       </div>
+       <button type="submit" id="publisher" form="post-from">Publish</button>
+        
+         
+    </div>
+    
+    <script>
+        function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+    
+                    reader.onload = function (e) {
+                        const imga = e.target.result;
+                        const blah = document.getElementById('blah');
+                        const setText = document.getElementById('setimage');
+
+                        
+                            blah.style.backgroundImage = "url('" + imga + "')";
+                            if(!blah.classList.contains('geronimo')){
+                                blah.classList.add("geronimo");
+                                setText.innerHTML = "Change featured image";
+
+                            }
+                            
+                            
+                    };
+    
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+    </script>
+
+ 
+</section>
+
+

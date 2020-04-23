@@ -1,0 +1,66 @@
+<%- include('partials/complete-header') %>
+<section class="limited-home">
+    <div class="main-content">
+        <% if(!category){ %>
+            <p>Uncategorised </p>
+        <% } else {%> 
+            <p><%= category %></p>
+       <% }%>
+        <h1 class="skrawl-title"><%= title %></h1>
+        <h2 class="humongous">Skrawl</h2>
+        <div class="post-stream">
+            <img class="display-featured" src="/<%= featuredImage.originalname %>">
+            <div class="single-post-meta">
+                <div class="left-meta">
+                    <div>
+                        <img class="thumbavatar big" src="../images/post-avatar.jpeg">
+                    </div>
+                    <div class="subleft-right">
+                       <div class="name-follow">
+                        <p class="author"><em>Author name</em></p>
+                        <button>Follow</button>
+                       </div> 
+                       <div class="date-read">
+                           <p class="date">Apr 30, 2019</p>
+                           <p class="date"> 11 min read</p>
+                       </div>
+                    </div>
+                </div>
+                <div class="right-meta">
+                    <p class="comments">12 Comments</p>
+                    
+                </div>
+            </div>
+            
+            <p><%- skrawl %></p>
+            <p><%= postId %></p>
+
+        </div>
+        <div>
+            <form action="/posts/<%=postId %>/comments" method="POST">
+                <input type="text" placeholder="Enter Username" name="username">
+                <textarea name="comment"></textarea>
+                <input type="submit">
+
+            </form>
+        </div>
+        <div>
+            
+ 
+            <% comments.forEach(function(comment){ %>
+                
+                <p><%= comment.username %></p> 
+                <p><%= comment.comment %></p> 
+           <% }); %>
+        
+        </div>
+    </div>
+    <div class="notifications relative" >
+       <%- include('partials/notifications') %>
+    </div>
+    
+  
+
+ 
+</section>
+

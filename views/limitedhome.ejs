@@ -38,9 +38,10 @@
      let one = document.getElementById('in');
      let two = document.getElementById('up');
      let three = document.getElementById('forg');
+     let button = document.getElementById('changer');
      function changeView(){
         
-        let button = document.getElementById('changer');
+      
      if(button.innerHTML === "Sign In"){
          button.innerHTML = "Sign Up";
          one.classList.remove("slide-out-top");
@@ -63,8 +64,8 @@
      }
      }
      function forgt(){
-         let button = document.getElementById('forg-rec');
-        
+        //  let button = document.getElementById('forg-rec');
+         button.innerHTML = "Sign In";
          three.classList.remove('forgot');
          three.classList.add("slide-in-bottom");
          one.classList.add("slide-out-top");

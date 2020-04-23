@@ -1,0 +1,46 @@
+<%- include('partials/complete-header') %>
+<section class="limited-home">
+    <div class="main-content">
+        <h1>My </br>Feed</h1>
+        <h2 class="humongous">Home</h2>
+        <div class="content-stream">
+            <% posts.forEach(function (post){ %>
+                <a class="post-card" href="posts/<%=post._id %>">
+                    <div class="post-text-content">
+                        <% if(!post.category){ %>
+                            <h4>Uncategorised </h4>
+                        <% } else {%> 
+                            <h4><%= post.category %></h4>
+                            <h4><%= post._id %></h4>
+                       <% }%>
+                        <h2><%= post.title %></h2>
+                        <% const excerpt = post.skrawl.replace(/(<([^>]+)>)/ig,""); %>
+                        <p class="post-paragraph"><%- excerpt.substring(0 , 200) %> </p>
+                        <p class="author"><img class="thumbavatar" src="../images/post-avatar.jpeg"><em>Author name</em></p>
+                        <div class="semi-final-meta">
+                            <p class="date">March 24, 2020</p>
+                        <p class="comments">12 Comments</p>
+                        </div>
+                        
+                    </div>
+                    <div class="post-thumbnail" style="background: url('<%=post.featuredImage.originalname %>');">
+                       
+                    </div>
+                </a>
+           <% }); %>
+                
+          
+           
+            
+
+        </div>
+    </div>
+    <div class="notifications relative" >
+       <%- include('partials/notifications') %>
+    </div>
+    
+  
+
+ 
+</section>
+
