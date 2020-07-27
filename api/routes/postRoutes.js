@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 module.exports = function(app){
     const postRoute = require('../controllers/postController');
     const commentRoute = require('../controllers/commentController');
-
+    const replyRoute = require('../controllers/repliesController');
    
     app.route('/')
         .get(postRoute.list_fake_posts);
@@ -30,5 +30,8 @@ module.exports = function(app){
         .get(postRoute.display_single_post);
 
     app.route("/posts/:postId/comments").post(commentRoute.post_comment);
-    
+    app.route("/posts/:postId/comments/:commentId/replies").post(replyRoute.comment_reply);
+
+    app.route("/profile")
+    .get(postRoute.show_profile);
 };

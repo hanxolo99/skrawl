@@ -52,33 +52,34 @@ exports.post_skrawl = function(req, res, next){
 exports.display_single_post = function(req, res){
     const requestedPostId = req.params.postId;
     
-      Post.findOne({_id: requestedPostId}).populate('comments').exec(function(err, post){
+      Post.findOne({_id: requestedPostId}).populate(
+          {
+              path: 'comments',
+              populate: {
+                  path: 'replies'
+              }
+          }
+      ).exec(function(err, post){
         res.render("post", {
           title: post.title,
           category: post.category,
           skrawl: post.skrawl,
           featuredImage: post.featuredImage,
           postId : post._id,
-          comments: post.comments
+          comments: post.comments,
+          replies: post.comments.replies
+          
+         
         
 
         });
       });
 };
 
+exports.show_profile = function(req, res){
+    res.render('profile');
+};
 
 
 
 
-// app.get("/posts/:postId", function(req, res){
-
-//     const requestedPostId = req.params.postId;
-    
-//       Post.findOne({_id: requestedPostId}, function(err, post){
-//         res.render("post", {
-//           title: post.title,
-//           content: post.content
-//         });
-//       });
-    
-//     });

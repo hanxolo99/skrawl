@@ -1,66 +1,189 @@
 <%- include('partials/complete-header') %>
 <section class="limited-home">
-    <div class="main-content">
-        <% if(!category){ %>
-            <p>Uncategorised </p>
-        <% } else {%> 
-            <p><%= category %></p>
-       <% }%>
-        <h1 class="skrawl-title"><%= title %></h1>
-        <h2 class="humongous">Skrawl</h2>
-        <div class="post-stream">
-            <img class="display-featured" src="/<%= featuredImage.originalname %>">
-            <div class="single-post-meta">
-                <div class="left-meta">
-                    <div>
-                        <img class="thumbavatar big" src="../images/post-avatar.jpeg">
-                    </div>
-                    <div class="subleft-right">
-                       <div class="name-follow">
-                        <p class="author"><em>Author name</em></p>
-                        <button>Follow</button>
-                       </div> 
-                       <div class="date-read">
-                           <p class="date">Apr 30, 2019</p>
-                           <p class="date"> 11 min read</p>
-                       </div>
-                    </div>
-                </div>
-                <div class="right-meta">
-                    <p class="comments">12 Comments</p>
-                    
-                </div>
+  <div class="main-content">
+    <% if(!category){ %>
+    <p>Uncategorised</p>
+    <% } else {%>
+    <p><%= category %></p>
+    <% }%>
+    <h1 class="skrawl-title"><%= title %></h1>
+    <h2 class="humongous">Skrawl</h2>
+    <div class="post-stream">
+      <img class="display-featured" src="/<%= featuredImage.originalname %>" />
+      <div class="single-post-meta">
+        <div class="left-meta">
+          <div>
+            <img class="thumbavatar big" src="../images/post-avatar.jpeg" />
+          </div>
+          <div class="subleft-right">
+            <div class="name-follow">
+              <p class="author"><em>Author name</em></p>
+              <button>Follow</button>
             </div>
-            
-            <p><%- skrawl %></p>
-            <p><%= postId %></p>
+            <div class="date-read">
+              <p class="date">Apr 30, 2019</p>
+              <p class="date">11 min read</p>
+            </div>
+          </div>
+        </div>
+        <div class="right-meta">
+          <p class="comments"><%= comments.length %> Comments</p>
+        </div>
+      </div>
 
-        </div>
-        <div>
-            <form action="/posts/<%=postId %>/comments" method="POST">
-                <input type="text" placeholder="Enter Username" name="username">
-                <textarea name="comment"></textarea>
-                <input type="submit">
-
-            </form>
-        </div>
-        <div>
-            
- 
-            <% comments.forEach(function(comment){ %>
-                
-                <p><%= comment.username %></p> 
-                <p><%= comment.comment %></p> 
-           <% }); %>
-        
-        </div>
+      <p><%- skrawl %></p>
     </div>
-    <div class="notifications relative" >
-       <%- include('partials/notifications') %>
+    <div class="bottom-meta">
+      <div class="single-post-meta">
+        <div class="left-meta">
+          <div class="bottom-avatar">
+            <img class="thumbavatar big" src="../images/post-avatar.jpeg" />
+          </div>
+          <div class="subleft-right">
+            <div class="name-follow last-meta">
+              <p class="written">Written By</p>
+              <p class="author">Author name</p>
+              <p class="author-bio">
+                Data Scientist at Cortex Intel, Data Science Communicator
+              </p>
+              <button>Follow</button>
+            </div>
+            <div class="date-read"></div>
+          </div>
+        </div>
+        <div class="right-meta">
+          <p class="share"><strong>Share this</strong></p>
+          <ul class="share">
+            <li><i class="fab fa-facebook"></i></li>
+            <li><i class="fab fa-twitter"></i></li>
+            <li><i class="fab fa-instagram"></i></li>
+            <li><i class="fab fa-linkedin"></i></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    
-  
+    <div class="comments-holder" id="comments">
+      <% const commentNumber = comments.length; %>
+      <h4><%= commentNumber %> Comments</h4>
+      <% comments.forEach(function(comment){ %>
+      <div class="comments-card" id="<% comment._id %>">
+        <div class="flex">
+          <div class="bottom-avatar">
+            <img class="thumbavatar big" src="../images/post-avatar.jpeg" />
+          </div>
+          <div class="subleft-right">
+            <div class="name-follow last-meta">
+              <p class="author comment">Author Name</p>
+              <p class="comment-text"><%= comment.comment %></p>
 
- 
+              <button onclick="doButton()">
+                <i class="fas fa-reply"></i> Reply
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <% if(comment.replies.length > 0){ %>
+        <div class="replies-holder">
+          <% let replies = comment.replies %> <%
+          replies.forEach(function(reply){%>
+          <div class="flex">
+            <div class="bottom-avatar">
+              <img class="thumbavatar big" src="../images/post-avatar.jpeg" />
+            </div>
+            <div class="subleft-right">
+              <div class="name-follow last-meta">
+                <p class="author comment">Author name</p>
+
+                <p class="comment-text"><%= reply.comment %></p>
+              </div>
+              <div class="date-read"></div>
+            </div>
+          </div>
+
+          <% })%>
+        </div>
+        <% } else { %>
+        <div class="replies-holder" style="display: none;"></div>
+        <% } %>
+
+        <div id="response-form" class="reply-comments-container comments-none">
+          <h4>
+            Leave a reply |
+            <a class="destroy" onclick="destroy()">Cancel reply:</a>
+          </h4>
+          <form
+            action="/posts/<%=postId %>/comments/<%=comment._id %>/replies"
+            method="POST"
+            class="reply-form"
+          >
+            <textarea name="comment" rows="10" aria-required="true"></textarea>
+            <input type="submit" value="Reply" />
+          </form>
+        </div>
+      </div>
+
+      <% }); %>
+    </div>
+
+    <div class="drop-reply-container">
+      <h4>Leave a comment:</h4>
+
+      <form
+        action="/posts/<%=postId %>/comments"
+        method="POST"
+        class="reply-form"
+      >
+        <textarea name="comment" rows="10" aria-required="true"></textarea>
+        <input type="submit" value="Reply" />
+      </form>
+    </div>
+    <div></div>
+  </div>
+  <div class="notifications relative">
+    <%- include('partials/notifications') %>
+  </div>
+
+  <script>
+    let decietfulArray = document.getElementsByClassName(
+      "reply-comments-container"
+    );
+    decietfulArray = Array.from(decietfulArray);
+    function destroy() {
+      decietfulArray.forEach(function (deskid) {
+        if (deskid.classList.contains("deciet")) {
+          deskid.classList.add("comments-none");
+          deskid.classList.remove("deciet");
+        }
+      });
+    }
+    function correctTheUniverse() {
+      let button = event.currentTarget;
+      decietfulArray.forEach(function (deskid) {
+        if (deskid.classList.contains("deciet")) {
+          deskid.classList.add("comments-none");
+          deskid.classList.remove("deciet");
+          var naTrue = true;
+        }
+      });
+    }
+    function createResponse() {
+      let button = event.currentTarget;
+      let commentsCardChildren = button.closest(".comments-card").children;
+      let cardList = Array.from(commentsCardChildren);
+      if (cardList[2].classList.contains("comments-none")) {
+        cardList[2].classList.remove("comments-none");
+        cardList[2].classList.add("deciet");
+      } else if (cardList[2].classList.contains("deciet")) {
+        cardList[2].classList.add("comments-none");
+      } else {
+        cardList[2].classList.add("comments-none");
+        // cardList[1].classList.remove('deciet');
+      }
+    }
+    async function doButton() {
+      await correctTheUniverse();
+      createResponse();
+    }
+  </script>
 </section>
-
